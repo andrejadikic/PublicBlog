@@ -7,86 +7,119 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Web programiranje</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div id="container" class="container">
+    <h1 class="title">Posts</h1>
+    <br>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/api/subjects">Subjects</a>
-            </li>
-        </ul>
+    <div id ="newPost">
+        <form method="POST" id="subject-form">
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" class="form-control" id="author" placeholder="Enter author">
+
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title">
+
+                <label for="content">Content</label>
+                <textarea class="form-control" id="content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-</nav>
 
-
-<div class="container">
-    <h1 class="naslov">RAF Subjects</h1>
-
-    <form method="POST" id="subject-form">
-        <div class="form-group">
-            <label for="subject-title">Subject</label>
-            <input type="text" class="form-control" id="subject-title" placeholder="Enter subject">
-
-            <label for="subject-content">Content</label>
-            <textarea class="form-control" id="subject-content"></textarea>
+    <div id="allPosts">
+        <div id="posts-links">
         </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <br>
-    <br>
-
-    <div id="subject-links">
-
+        <br>
+        <button onclick="addPostForm()" >New Post</button>
     </div>
 </div>
 
 <script>
-    fetch('/api/subjects', {
+    const posts = document.getElementById('allPosts');
+    fetch('/api/posts', {
         method: 'GET'
     }).then(response => {
         return response.json();
-    }).then(subjects => {
-        for (const subject of subjects) {
-            addSubjectElements(subject)
+    }).then(posts => {
+        for (const post of posts) {
+            addPost(post)
         }
     })
+    const newPost = document.getElementById('newPost');
+    newPost.hidden=true;
+    function addPostForm(){
+        posts.hidden = true;
+        newPost.hidden = false;
+    }
 
-    function addSubjectElements(subject) {
-        const subjectLinks = document.getElementById('subject-links');
+
+    function addPost(post) {
+        const postLinks = document.getElementById('posts-links');
 
         const linkWrapperDiv = document.createElement('div');
+        const postTitle = document.createElement('h2');
+        postTitle.innerText = post.title;
 
-        const subjectLink = document.createElement('a');
-        subjectLink.innerText = subject.title;
-        subjectLink.href = '/api/subjects/' + subject.id;
-        // subjectLink.hidden = true;
+        const postContent = document.createElement('p');
+        postContent.innerText = post.content;
 
-        const removeButton = document.createElement('button');
-        removeButton.innerText = 'Remove'
-        removeButton.classList.add('btn', 'btn-danger')
-        removeButton.style.marginLeft = '10px'
-        removeButton.onclick = function (e) {
-            deleteSubject(subject.id).then(() => {
-                subjectLinks.removeChild(linkWrapperDiv)
-            });
+        postContent.style.height='4em';
+        postContent.style.overflow = 'hidden';
+        postContent.style.textOverflow = 'ellipsis';
+
+        const postElement = document.createElement('div');
+        postElement.appendChild(postContent);
+
+
+        const detailsBtn = document.createElement('button');
+        detailsBtn.innerText = 'Details'
+        detailsBtn.onclick = function (e) {
+            posts.hidden = true;
+            const detailsDiv = document.createElement('div');
+            const postTitle = document.createElement('h1');
+            postTitle.innerText = post.title;
+
+            const postAuthor = document.createElement('p');
+            postAuthor.innerText = post.author;
+
+            const postContent = document.createElement('p');
+            postContent.innerText = post.content;
+
+            detailsDiv.appendChild(postTitle);
+            detailsDiv.appendChild(postAuthor);
+            detailsDiv.appendChild(postContent);
+
+            const commentsDiv = document.createElement('div');
+            const postComments = document.createElement('h2');
+            postComments.innerText = "Comments";
+            commentsDiv.appendChild(postComments);
+            fetch('/api/comments', {
+                method: 'GET'
+            }).then(response => {
+                return response.json();
+            }).then(posts => {
+                for (const comment of posts) {
+                    const nameComm = document.createElement('h3');
+                    nameComm.innerText = comment.name;
+                    const textComm = document.createElement('p');
+                    textComm.innerText = comment.comment;
+                }
+            })
+
         }
 
-        linkWrapperDiv.appendChild(subjectLink);
-        linkWrapperDiv.appendChild(removeButton);
+        // subjectLink.hidden = true;
+        linkWrapperDiv.appendChild(postTitle);
         linkWrapperDiv.appendChild(document.createElement('br'));
-        linkWrapperDiv.appendChild(document.createElement('br'));
+        linkWrapperDiv.appendChild(postElement);
+        linkWrapperDiv.appendChild(detailsBtn);
 
-        subjectLinks.appendChild(linkWrapperDiv);
+        postLinks.appendChild(linkWrapperDiv);
     }
 
     function deleteSubject(id) {
-        return fetch('/api/subjects/'+id, {
+        return fetch('/api/posts/'+id, {
             method: 'DELETE'
         })
     }
@@ -94,27 +127,33 @@
     document.getElementById("subject-form").addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const subjectTitleElement = document.getElementById('subject-title');
-        const contentElement = document.getElementById('subject-content');
+        const authorElement = document.getElementById('author');
+        const titleElement = document.getElementById('title');
+        const contentElement = document.getElementById('content');
 
-        const title = subjectTitleElement.value;
+        const title = titleElement.value;
         const content = contentElement.value;
+        const author = authorElement.value;
 
-        fetch('/api/subjects', {
+        fetch('/api/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                author: author,
                 title: title,
                 content: content
             })
         }).then(response => {
             return response.json();
-        }).then(subject => {
-            addSubjectElements(subject)
-            subjectTitleElement.value = '';
+        }).then(post => {
+            addPost(post)
+            authorElement.value = '';
+            titleElement.value = '';
             contentElement.value = '';
+            newPost.hidden=true;
+            posts.hidden=false;
         })
     })
 </script>
