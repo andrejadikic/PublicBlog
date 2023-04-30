@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 public class Comment {
     private Long id;

@@ -33,6 +33,19 @@
         <br>
         <button onclick="addPostForm()" >New Post</button>
     </div>
+
+    <div id ="newComment">
+        <form method="POST" id="comment-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter name">
+
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -47,7 +60,9 @@
         }
     })
     const newPost = document.getElementById('newPost');
+    const newComment = document.getElementById('newComment');
     newPost.hidden=true;
+    newComment.hidden=true;
     function addPostForm(){
         posts.hidden = true;
         newPost.hidden = false;
@@ -71,18 +86,16 @@
         const postElement = document.createElement('div');
         postElement.appendChild(postContent);
 
-
         const detailsBtn = document.createElement('button');
         detailsBtn.innerText = 'Details'
         detailsBtn.onclick = function (e) {
             posts.hidden = true;
             const detailsDiv = document.createElement('div');
+            const container = document.getElementById('container');
             const postTitle = document.createElement('h1');
             postTitle.innerText = post.title;
-
             const postAuthor = document.createElement('p');
             postAuthor.innerText = post.author;
-
             const postContent = document.createElement('p');
             postContent.innerText = post.content;
 
@@ -94,18 +107,58 @@
             const postComments = document.createElement('h2');
             postComments.innerText = "Comments";
             commentsDiv.appendChild(postComments);
-            fetch('/api/comments', {
+            fetch('/api/comments/' + post.id, {
                 method: 'GET'
             }).then(response => {
                 return response.json();
-            }).then(posts => {
-                for (const comment of posts) {
+            }).then(comments => {
+                for (const comment of comments) {
                     const nameComm = document.createElement('h3');
                     nameComm.innerText = comment.name;
                     const textComm = document.createElement('p');
                     textComm.innerText = comment.comment;
+                    commentsDiv.appendChild(nameComm);
+                    commentsDiv.appendChild(textComm);
                 }
             })
+            newComment.hidden = false;
+            document.getElementById("comment-form").addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const nameElement = document.getElementById('name');
+                const commentElement = document.getElementById('comment');
+
+                const name = nameElement.value;
+                const comment = commentElement.value;
+
+                if(name.length===0 || comment.length===0){
+                    alert('All fields are required');
+                    return;
+                }
+
+                fetch('/api/comments/' + post.id, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({name,comment})
+                }).then(response => {
+                    return response.json();
+                }).then(comment => {
+                    const nameComm = document.createElement('h3');
+                    nameComm.innerText = comment.name;
+                    const textComm = document.createElement('p');
+                    textComm.innerText = comment.comment;
+                    commentsDiv.appendChild(nameComm);
+                    commentsDiv.appendChild(textComm);
+                    nameElement.value = '';
+                    commentElement.value = '';
+                })
+            })
+
+            detailsDiv.appendChild(commentsDiv);
+            detailsDiv.id='detailsDiv';
+            container.appendChild(detailsDiv);
 
         }
 
@@ -134,6 +187,11 @@
         const title = titleElement.value;
         const content = contentElement.value;
         const author = authorElement.value;
+
+        if(title.length===0 || author.length===0 || content.length===0){
+            alert('All fields are required');
+            return;
+        }
 
         fetch('/api/posts', {
             method: 'POST',
