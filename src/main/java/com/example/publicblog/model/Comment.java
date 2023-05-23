@@ -10,6 +10,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Comment {
     private Long id;
     @NonNull

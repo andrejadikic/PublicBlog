@@ -28,6 +28,13 @@ public class Post {
     private String content;
     private List<Comment> comments = new CopyOnWriteArrayList<>();
 
+    public Post(Long id, @NonNull String author, @NonNull String title, @NonNull String content) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
