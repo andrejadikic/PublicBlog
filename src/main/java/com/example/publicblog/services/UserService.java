@@ -32,7 +32,7 @@ public class UserService {
 
         // JWT-om mozete bezbedono poslati informacije na FE
         // Tako sto sve sto zelite da posaljete zapakujete u claims mapu
-        return JWT.create()
+        return "Bearer " + JWT.create()
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt)
                 .withSubject(username)

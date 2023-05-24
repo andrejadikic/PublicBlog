@@ -64,7 +64,7 @@ public class MySqlPostRepository extends MySqlAbstractRepository implements Post
                 st.setInt(1, Math.toIntExact(post.getId()));
                 rs = st.executeQuery();
                 while(rs.next()){
-                    post.getComments().add(new Comment((long)resultSet.getInt("id"), resultSet.getString("name"),resultSet.getString("comment")));
+                    post.getComments().add(new Comment((long)rs.getInt("id"), rs.getString("name"),rs.getString("comment")));
                 }
                 posts.add(post);
             }
@@ -107,7 +107,7 @@ public class MySqlPostRepository extends MySqlAbstractRepository implements Post
                 st.setInt(1, Math.toIntExact(post.getId()));
                 rs = st.executeQuery();
                 while(rs.next()){
-                    post.getComments().add(new Comment((long)resultSet.getInt("id"), resultSet.getString("name"),resultSet.getString("comment")));
+                    post.getComments().add(new Comment((long)rs.getInt("id"), rs.getString("name"),rs.getString("comment")));
                 }
             }
 

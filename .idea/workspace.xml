@@ -9,22 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c787ebb6-97b4-4b37-9d71-0b5f1a10bb40" name="Changes" comment="All done">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/filters/AuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/MySqlAbstractRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/comment/MySqlCommentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/post/MySqlPostRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/user/InMemoryUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/user/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/requests/LoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/resources/UserResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/services/UserService.java" afterDir="false" />
+    <list default="true" id="c787ebb6-97b4-4b37-9d71-0b5f1a10bb40" name="Changes" comment="MySql services added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/publicblog/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/publicblog/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/model/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/publicblog/model/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/model/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/post/MySqlPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/repositories/post/MySqlPostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/publicblog/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/publicblog/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +186,7 @@
       <workItem from="1683199821119" duration="165000" />
       <workItem from="1683370611209" duration="930000" />
       <workItem from="1684656166141" duration="6587000" />
-      <workItem from="1684857009928" duration="5196000" />
+      <workItem from="1684857009928" duration="13847000" />
     </task>
     <task id="LOCAL-00001" summary="Backend done and part of frontend">
       <created>1682840789102</created>
@@ -213,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682842648459</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="MySql services added">
+      <created>1684876786875</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684876786875</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +218,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Backend done and part of frontend" />
     <MESSAGE value="All done" />
-    <option name="LAST_COMMIT_MESSAGE" value="All done" />
+    <MESSAGE value="MySql services added" />
+    <option name="LAST_COMMIT_MESSAGE" value="MySql services added" />
   </component>
 </project>
